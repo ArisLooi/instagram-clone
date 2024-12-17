@@ -1,18 +1,22 @@
 import { useContext, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Row, Col, Image, Nav } from 'react-bootstrap';
 import { ProfileContext } from '../App';
 import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 
+
 export default function ImageGrid() {
+    const posts = useSelector((state) => state.posts);
+
     const [key, setKey] = useState('posts');
     const profileData = useContext(ProfileContext);
 
-    const renderImages = (images) => {
-        return images.map((imageUrl, index) => (
-            <Col md={4} key={index} className="mb-4">
-                <Image src={imageUrl} fluid />
+    const renderImages = () => {
+        return posts.map((post) => (
+            <Col md={4} key={post.id} className="mb-4">
+                <Image src={post.image} fluid />
             </Col>
         ));
     };
