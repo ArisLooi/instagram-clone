@@ -1,4 +1,5 @@
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import IconButton from "./components/IconButton";
 
 export default function App() {
   return (
@@ -8,37 +9,18 @@ export default function App() {
         className="d-flex flex-column justify-content-start align-items-center vh-100 bg-light"
         style={{ position: "sticky", top: 0 }}
       >
-        <Button variant={"light my-4"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-instagram"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-house"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-search"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-compass"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-film"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-chat"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-heart"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-plus-square"} style={{ "font-size": "24px" }}></i>
-        </Button>
-        <Button variant={"light mt-auto mb-3"} style={{ marginBottom: "7px" }}>
-          <i className={"bi bi-list"} style={{ "font-size": "24px" }}></i>
-        </Button>
-
+        <IconButton className="bi bi-instagram" isTop />
+        <IconButton className="bi bi-house" />
+        <IconButton className="bi bi-search" />
+        <IconButton className="bi bi-compass" />
+        <IconButton className="bi bi-film" />
+        <IconButton className="bi bi-chat" />
+        <IconButton className="bi bi-plus-square" />
+        <IconButton className="bi bi-person-circle" />
+        <IconButton className="bi bi-list" isBottom />
 
       </Col>
       <Col sm={11}>Main</Col>
-    </Row>
+    </Row >
   )
 }
