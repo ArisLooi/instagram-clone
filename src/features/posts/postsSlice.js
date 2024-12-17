@@ -30,16 +30,21 @@ const postsSlice = createSlice({
                 description: action.payload.description,
                 date: new Date().toISOString(),
                 likes: 0,
-                comment: 0,
+                comments: 0,
             };
             state.push(newPost);
         },
         updatePost: (state, action) => {
             const index = state.findIndex((post) => post.id === action.payload.id);
-            state[index] = action.payload;
+            if (index !== -1) {
+                state[index] = { ...state[index], ...action.payload };
+            }
+        },
+        deletePost: (state, action) => {
+            return state.filter((post) => post.id !== action.payload);
         }
     },
 });
 
-export const { createPost } = postsSlice.actions;
+export const { createPost, updatePost, deletePost } = postsSlice.actions;
 export default postsSlice.reducer;

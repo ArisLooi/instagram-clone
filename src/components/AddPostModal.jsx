@@ -41,13 +41,26 @@ export default function AddPostModal({ show, handleClose }) {
                 <Modal.Body>
                     <Row>
                         <Col sm={7} style={{ margin: `0px` }}>
-                            <Image
-                                src={imageUrl || "https://sig1.co/img-placeholder-1"}
-                                alt="uploaded content"
-                                onError={handleImageError}
-                                onLoad={handleImageLoad}
-                                style={{ width: "100%" }}
-                            />
+                            <div style={{
+                                width: '100%',
+                                height: '100%', // Adjust height as needed
+                                overflow: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Image
+                                    src={imageUrl || "https://sig1.co/img-placeholder-1"}
+                                    alt="uploaded content"
+                                    onError={handleImageError}
+                                    onLoad={handleImageLoad}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </div>
                         </Col>
                         <Col sm={5}>
                             <Image

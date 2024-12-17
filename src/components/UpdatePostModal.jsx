@@ -2,14 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { ProfileContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePost } from "../features/posts/postsSlice"
+import { updatePost } from "../features/posts/postsSlice";
 
 function UpdatePostModal({ show, handleClose, postId }) {
     const { image, name } = useContext(ProfileContext);
     const dispatch = useDispatch();
 
     const post = useSelector((state) =>
-        state.post.find((post) => post.id === postId)
+        state.posts.find((post) => post.id === postId)
     );
     const [imageUrl, setImageUrl] = useState("");
     const [description, setDescription] = useState("");
@@ -25,7 +25,12 @@ function UpdatePostModal({ show, handleClose, postId }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (imageUrl) {
-            dispatch(createPost({ image: imageUrl, description }));
+            dispatch(
+                updatePost({
+                    id: postId,
+                    image: imageUrl,
+                    description
+                }));
             setImageUrl("");
             setDescription("");
             handleClose();
@@ -44,20 +49,33 @@ function UpdatePostModal({ show, handleClose, postId }) {
 
     return (
         <Modal show={show} onHide={handleClose} size="lg">
-            <Modal.Header>
-                <Modal.Title>Create new post</Modal.Title>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit Post</Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <Row>
                         <Col sm={7} style={{ margin: `0px` }}>
-                            <Image
-                                src={imageUrl || "https://sig1.co/img-placeholder-1"}
-                                alt="uploaded content"
-                                onError={handleImageError}
-                                onLoad={handleImageLoad}
-                                style={{ width: "100%" }}
-                            />
+                            <div style={{
+                                width: '100%',
+                                height: '400px', // Adjust height as needed
+                                overflow: 'hidden',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Image
+                                    src={imageUrl || "https://sig1.co/img-placeholder-1"}
+                                    alt="uploaded content"
+                                    onError={handleImageError}
+                                    onLoad={handleImageLoad}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover'
+                                    }}
+                                />
+                            </div>
                         </Col>
                         <Col sm={5}>
                             <Image
@@ -87,7 +105,7 @@ function UpdatePostModal({ show, handleClose, postId }) {
                                 rows={3}
                                 placeholder="Write a caption..."
                             />
-                            <Button type="submit" style={{ width: "100%" }}>Share</Button>
+                            <Button type="submit" style={{ width: "100%" }}>Update</Button>
                         </Col>
                     </Row>
                 </Modal.Body>
@@ -95,3 +113,5 @@ function UpdatePostModal({ show, handleClose, postId }) {
         </Modal >
     );
 }
+
+export default UpdatePostModal;

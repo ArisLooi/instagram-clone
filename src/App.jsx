@@ -14,6 +14,7 @@ export default function App() {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
+
   return (
     <ProfileContext.Provider value={PROFILE_DATA}>
 
