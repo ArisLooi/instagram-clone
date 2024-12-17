@@ -4,6 +4,7 @@ import ProfileHeader from "./components/ProfileHeader";
 import { createContext } from "react";
 import { PROFILE_DATA } from "./data";
 import ImageGrid from "./components/ImageGrid";
+import Bookmark from "./components/Bookmark";
 
 export const ProfileContext = createContext(null);
 
@@ -31,6 +32,7 @@ export default function App() {
         <Col sm={11}>
           <Container>
             <ProfileHeader />
+            <Bookmark />
             <ImageGrid />
           </Container>
         </Col>
