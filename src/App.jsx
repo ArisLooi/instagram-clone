@@ -4,6 +4,8 @@ import ProfileHeader from "./components/ProfileHeader";
 import { createContext } from "react";
 import { PROFILE_DATA } from "./data";
 
+export const ProfileContext = createContext(null);
+
 export default function App() {
   return (
     <ProfileContext.Provider value={PROFILE_DATA}>
