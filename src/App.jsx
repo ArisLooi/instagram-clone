@@ -8,8 +8,10 @@ import ImageGrid from "./components/ImageGrid";
 export const ProfileContext = createContext(null);
 
 export default function App() {
+  const profileImageUrl = "./public/me.jpg";
   return (
     <ProfileContext.Provider value={PROFILE_DATA}>
+
       <Row>
         <Col
           sm={1}
@@ -22,8 +24,8 @@ export default function App() {
           <IconButton className="bi bi-compass" />
           <IconButton className="bi bi-film" />
           <IconButton className="bi bi-chat" />
+          <IconButton imageUrl={profileImageUrl} />
           <IconButton className="bi bi-plus-square" />
-          <IconButton className="bi bi-person-circle" />
           <IconButton className="bi bi-list" isBottom />
         </Col>
         <Col sm={11}>
