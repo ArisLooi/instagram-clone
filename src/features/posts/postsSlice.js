@@ -42,9 +42,15 @@ const postsSlice = createSlice({
         },
         deletePost: (state, action) => {
             return state.filter((post) => post.id !== action.payload);
+        },
+        likePost: (state, action) => {
+            const index = state.findIndex((post) => post.id === action.payload);
+            if (index !== -1) {
+                state[index].likes += 1;
+            }
         }
     },
 });
 
-export const { createPost, updatePost, deletePost } = postsSlice.actions;
+export const { createPost, updatePost, deletePost, likePost } = postsSlice.actions;
 export default postsSlice.reducer;

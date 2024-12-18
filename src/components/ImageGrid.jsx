@@ -6,7 +6,7 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import UpdatePostModal from './UpdatePostModal';
-import { deletePost } from '../features/posts/postsSlice';
+import { deletePost, likePost } from '../features/posts/postsSlice';
 import '../App.css';
 
 export default function ImageGrid() {
@@ -28,36 +28,45 @@ export default function ImageGrid() {
         dispatch(deletePost(postId));
     };
 
+    const handleLike = (postId) => {
+        dispatch(likePost(postId));
+    }
     const [key, setKey] = useState('posts');
     const profileData = useContext(ProfileContext);
 
     const renderImages = (images) => {
-        return images.map((image, index) => (
-            <Col md={4} key={index} className="mb-4 image-grid-item">
-                <div className="image-wrapper">
-                    <Image
-                        src={image}
-                        alt={`Post ${index}`}
-                        className="grid-image"
-                        fluid
-                    />
-                </div>
-                <div className="d-flex">
-                    <Button onClick={() => handleShow(posts.find((post) => post.image === image))} variant="outline-primary">
-                        <i className='bi bi-pencil-square'></i>
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            const postToDelete = posts.find((post) => post.image === image);
-                            if (postToDelete) handleDelete(postToDelete.id);
-                        }}
-                        variant="outline-danger"
-                    >
-                        <i className="bi bi-trash"></i>
-                    </Button>
-                </div>
-            </Col>
-        ));
+        return images.map((image, index) => {
+            const post = posts.find((post) => post.image === image);
+            return (
+                <Col md={4} key={index} className="mb-4 image-grid-item">
+                    <div className="image-wrapper">
+                        <Image
+                            src={image}
+                            alt={`Post ${index}`}
+                            className="grid-image"
+                            fluid
+                        />
+                    </div>
+                    <div className="d-flex">
+                        <Button onClick={() => handleShow(posts.find((post) => post.image === image))} variant="outline-primary">
+                            <i className='bi bi-pencil-square'></i>
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                const postToDelete = posts.find((post) => post.image === image);
+                                if (postToDelete) handleDelete(postToDelete.id);
+                            }}
+                            variant="outline-danger"
+                        >
+                            <i className="bi bi-trash"></i>
+                        </Button>
+                        <Button onClick={() => handleLike(post.id)} variant="outline-success">
+                            <i className="bi bi-hand-thumbs-up"></i>{post.likes}
+                        </Button>
+                    </div>
+                </Col >
+            );
+        });
     };
 
     return (
