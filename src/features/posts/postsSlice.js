@@ -30,7 +30,7 @@ const postsSlice = createSlice({
                 description: action.payload.description,
                 date: new Date().toISOString(),
                 likes: 0,
-                comments: 0,
+                comments: [],
             };
             state.push(newPost);
         },
@@ -48,7 +48,11 @@ const postsSlice = createSlice({
             if (index !== -1) {
                 state[index].likes += 1;
             }
-        }
+        }, addComment: (state, action) => {
+            const { postId, comment } = action.payload;
+            const index = state.findIndex((post) => post.id === postId);
+            if (index !== -1) { state[index].comments.push(comment); }
+        },
     },
 });
 
