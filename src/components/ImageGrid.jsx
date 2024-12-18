@@ -30,44 +30,37 @@ export default function ImageGrid() {
 
     const handleLike = (postId) => {
         dispatch(likePost(postId));
-    }
+    };
+
     const [key, setKey] = useState('posts');
     const profileData = useContext(ProfileContext);
 
-    const renderImages = (images) => {
-        return images.map((image, index) => {
-            const post = posts.find((post) => post.image === image);
-            return (
-                <Col md={4} key={index} className="mb-4 image-grid-item">
-                    <div className="image-wrapper">
-                        <Image
-                            src={image}
-                            alt={`Post ${index}`}
-                            className="grid-image"
-                            fluid
-                        />
-                    </div>
-                    <div className="d-flex">
-                        <Button onClick={() => handleShow(posts.find((post) => post.image === image))} variant="outline-primary">
-                            <i className='bi bi-pencil-square'></i>
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                const postToDelete = posts.find((post) => post.image === image);
-                                if (postToDelete) handleDelete(postToDelete.id);
-                            }}
-                            variant="outline-danger"
-                        >
-                            <i className="bi bi-trash"></i>
-                        </Button>
-                        <Button onClick={() => handleLike(post.id)} variant="outline-success">
-                            <i className="bi bi-hand-thumbs-up"></i>{post.likes}
-                        </Button>
-                    </div>
-                </Col >
-            );
-        });
+    const renderPostImages = () => {
+        return posts.map((post, index) => (
+            <Col md={4} key={index} className="mb-4 image-grid-item">
+                <div className="image-wrapper">
+                    <Image src={post.image} alt={`Post ${index}`} className="grid-image" fluid />
+                </div>
+                <div className="d-flex ">
+                    <Button onClick={() => handleShow(post)} variant="outline-primary">
+                        <i className='bi bi-pencil-square'></i>
+                    </Button>
+                    <Button onClick={() => handleDelete(post.id)} variant="outline-danger">
+                        <i className="bi bi-trash"></i>
+                    </Button>
+                    <Button onClick={() => handleLike(post.id)} variant="outline-success">
+                        <i className="bi bi-hand-thumbs-up"></i> {post.likes}
+                    </Button>
+                </div>
+            </Col>
+        ));
     };
+
+    // Function to render reels images 
+    const renderReelImages = () => { return profileData.reels.map((reel, index) => (<Col md={4} key={index} className="mb-4 image-grid-item"> <div className="image-wrapper"> <Image src={reel.image} alt={`Reel ${index}`} className="grid-image" fluid /> </div> </Col>)); };
+
+    // Function to render tagged images 
+    const renderTaggedImages = () => { return profileData.tagged.map((tagged, index) => (<Col md={4} key={index} className="mb-4 image-grid-item"> <div className="image-wrapper"> <Image src={tagged.image} alt={`Tagged ${index}`} className="grid-image" fluid /> </div> </Col>)); };
 
     return (
         <TabContainer id="image-grid" activeKey={key} onSelect={(k) => setKey(k)}>
@@ -92,7 +85,7 @@ export default function ImageGrid() {
             <TabContent>
                 <TabPane eventKey="posts">
                     <>
-                        <Row>{renderImages(posts.map((post) => post.image))}</Row>
+                        <Row>{renderPostImages()}</Row>
                         {currentPost && (
                             <UpdatePostModal
                                 show={show}
@@ -104,10 +97,10 @@ export default function ImageGrid() {
                 </TabPane>
 
                 <TabPane eventKey="reels">
-                    <Row>{renderImages(profileData.reels.map((reel) => reel.image))}</Row>
+                    <Row>{renderReelImages()}</Row>
                 </TabPane>
                 <TabPane eventKey="tagged">
-                    <Row>{renderImages(profileData.tagged.map((tagged) => tagged.image))}</Row>
+                    <Row>{renderTaggedImages()}</Row>
                 </TabPane>
             </TabContent>
         </TabContainer>
