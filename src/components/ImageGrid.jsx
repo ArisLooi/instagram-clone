@@ -7,7 +7,7 @@ import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import UpdatePostModal from './UpdatePostModal';
 import { deletePost } from '../features/posts/postsSlice';
-
+import '../App.css';
 
 export default function ImageGrid() {
     const posts = useSelector((state) => state.posts);
@@ -33,24 +33,12 @@ export default function ImageGrid() {
 
     const renderImages = (images) => {
         return images.map((image, index) => (
-            <Col md={4} key={index} className="mb-4">
-                <div style={{
-                    width: '100%',
-                    height: '400px', // Fixed height
-                    overflow: 'hidden',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginBottom: '1rem'
-                }}>
+            <Col md={4} key={index} className="mb-4 image-grid-item">
+                <div className="image-wrapper">
                     <Image
                         src={image}
                         alt={`Post ${index}`}
-                        style={{
-                            width: '100%',
-                            height: '400px',
-                            objectFit: 'cover'
-                        }}
+                        className="grid-image"
                         fluid
                     />
                 </div>

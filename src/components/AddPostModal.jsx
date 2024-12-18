@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { ProfileContext } from "../App";
 import { useDispatch } from "react-redux";
-import { createPost } from "../features/posts/postsSlice"
+import { createPost } from "../features/posts/postsSlice";
+import '../App.css';
 
 export default function AddPostModal({ show, handleClose }) {
     const { image, name } = useContext(ProfileContext);
@@ -22,43 +23,32 @@ export default function AddPostModal({ show, handleClose }) {
         } else {
             setInvalidUrl(true);
         }
-    }
+    };
 
     const handleImageError = () => {
         setInvalidUrl(true);
-    }
+    };
 
     const handleImageLoad = () => {
         setInvalidUrl(false);
-    }
+    };
 
     return (
         <Modal show={show} onHide={handleClose} size="lg">
-            <Modal.Header>
+            <Modal.Header closeButton>
                 <Modal.Title>Create new post</Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleSubmit}>
                 <Modal.Body>
                     <Row>
-                        <Col sm={7} style={{ margin: `0px` }}>
-                            <div style={{
-                                width: '100%',
-                                height: '100%', // Adjust height as needed
-                                overflow: 'hidden',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
+                        <Col sm={7} style={{ margin: "0px" }}>
+                            <div className="modal-image-wrapper">
                                 <Image
                                     src={imageUrl || "https://sig1.co/img-placeholder-1"}
                                     alt="uploaded content"
                                     onError={handleImageError}
                                     onLoad={handleImageLoad}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover'
-                                    }}
+                                    className="modal-image"
                                 />
                             </div>
                         </Col>
@@ -81,7 +71,6 @@ export default function AddPostModal({ show, handleClose }) {
                                     Invalid URL or failed to load image
                                 </div>
                             )}
-
                             <Form.Control
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
@@ -95,6 +84,6 @@ export default function AddPostModal({ show, handleClose }) {
                     </Row>
                 </Modal.Body>
             </Form>
-        </Modal >
+        </Modal>
     );
 }

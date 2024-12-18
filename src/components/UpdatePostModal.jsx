@@ -3,6 +3,7 @@ import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { ProfileContext } from "../App";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePost } from "../features/posts/postsSlice";
+import '../App.css';
 
 function UpdatePostModal({ show, handleClose, postId }) {
     const { image, name } = useContext(ProfileContext);
@@ -56,24 +57,13 @@ function UpdatePostModal({ show, handleClose, postId }) {
                 <Modal.Body>
                     <Row>
                         <Col sm={7} style={{ margin: `0px` }}>
-                            <div style={{
-                                width: '100%',
-                                height: '400px', // Adjust height as needed
-                                overflow: 'hidden',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
+                            <div className="modal-image-wrapper">
                                 <Image
                                     src={imageUrl || "https://sig1.co/img-placeholder-1"}
                                     alt="uploaded content"
                                     onError={handleImageError}
                                     onLoad={handleImageLoad}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover'
-                                    }}
+                                    className="modal-image"
                                 />
                             </div>
                         </Col>
