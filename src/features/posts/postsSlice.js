@@ -7,7 +7,7 @@ const initialState = [
         description: "Post 1 description",
         date: new Date().toISOString(),
         likes: 15,
-        comments: 5,
+        comments: [],
     },
     {
         id: 2,
@@ -15,7 +15,7 @@ const initialState = [
         description: "Post 2 description",
         date: new Date().toISOString(),
         likes: 30,
-        comments: 10,
+        comments: [],
     },
 ];
 
@@ -56,5 +56,5 @@ const postsSlice = createSlice({
     },
 });
 
-export const { createPost, updatePost, deletePost, likePost } = postsSlice.actions;
+export const { createPost, updatePost, deletePost, likePost, addComment } = postsSlice.actions;
 export default postsSlice.reducer;

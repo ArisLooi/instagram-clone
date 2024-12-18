@@ -6,6 +6,7 @@ import TabContainer from 'react-bootstrap/TabContainer';
 import TabContent from 'react-bootstrap/TabContent';
 import TabPane from 'react-bootstrap/TabPane';
 import UpdatePostModal from './UpdatePostModal';
+import CommentModal from './CommentModal';
 import { deletePost, likePost } from '../features/posts/postsSlice';
 import '../App.css';
 
@@ -13,6 +14,8 @@ export default function ImageGrid() {
     const posts = useSelector((state) => state.posts);
     const [show, setShow] = useState(false);
     const [currentPost, setCurrentPost] = useState(null);
+    const [showCommentModal, setShowCommentModal] = useState(false);
+    const [commentPostId, setCommentPostId] = useState(null);
     const dispatch = useDispatch();
 
     const handleClose = () => {
@@ -22,6 +25,16 @@ export default function ImageGrid() {
     const handleShow = (post) => {
         setCurrentPost(post);
         setShow(true);
+    };
+
+    const handleShowCommentModal = (postId) => {
+        setCommentPostId(postId);
+        setShowCommentModal(true);
+    };
+
+    const handleCloseCommentModal = () => {
+        setCommentPostId(null);
+        setShowCommentModal(false);
     };
 
     const handleDelete = (postId) => {
@@ -39,7 +52,12 @@ export default function ImageGrid() {
         return posts.map((post, index) => (
             <Col md={4} key={index} className="mb-4 image-grid-item">
                 <div className="image-wrapper">
-                    <Image src={post.image} alt={`Post ${index}`} className="grid-image" fluid />
+                    <Image
+                        src={post.image}
+                        alt={`Post ${index}`}
+                        className="grid-image"
+                        fluid
+                    />
                 </div>
                 <div className="d-flex ">
                     <Button onClick={() => handleShow(post)} variant="outline-primary">
@@ -51,16 +69,46 @@ export default function ImageGrid() {
                     <Button onClick={() => handleLike(post.id)} variant="outline-success">
                         <i className="bi bi-hand-thumbs-up"></i> {post.likes}
                     </Button>
+                    <Button onClick={() => handleShowCommentModal(post.id)} variant="outline-info">
+                        <i className="bi bi-chat"></i> {post.comments.length}
+                    </Button>
+
                 </div>
             </Col>
         ));
     };
 
     // Function to render reels images 
-    const renderReelImages = () => { return profileData.reels.map((reel, index) => (<Col md={4} key={index} className="mb-4 image-grid-item"> <div className="image-wrapper"> <Image src={reel.image} alt={`Reel ${index}`} className="grid-image" fluid /> </div> </Col>)); };
+    const renderReelImages = () => {
+        return profileData.reels.map((reel, index) => (
+            <Col md={4} key={index} className="mb-4 image-grid-item">
+                <div className="image-wrapper">
+                    <Image
+                        src={reel.image}
+                        alt={`Reel ${index}`}
+                        className="grid-image"
+                        fluid
+                    />
+                </div>
+            </Col>
+        ));
+    };
 
     // Function to render tagged images 
-    const renderTaggedImages = () => { return profileData.tagged.map((tagged, index) => (<Col md={4} key={index} className="mb-4 image-grid-item"> <div className="image-wrapper"> <Image src={tagged.image} alt={`Tagged ${index}`} className="grid-image" fluid /> </div> </Col>)); };
+    const renderTaggedImages = () => {
+        return profileData.tagged.map((tagged, index) => (
+            <Col md={4} key={index} className="mb-4 image-grid-item">
+                <div className="image-wrapper">
+                    <Image
+                        src={tagged.image}
+                        alt={`Tagged ${index}`}
+                        className="grid-image"
+                        fluid
+                    />
+                </div>
+            </Col>
+        ));
+    };
 
     return (
         <TabContainer id="image-grid" activeKey={key} onSelect={(k) => setKey(k)}>
@@ -91,6 +139,13 @@ export default function ImageGrid() {
                                 show={show}
                                 handleClose={handleClose}
                                 postId={currentPost.id}
+                            />
+                        )}
+                        {commentPostId && (
+                            <CommentModal
+                                show={showCommentModal}
+                                handleClose={handleCloseCommentModal}
+                                postId={commentPostId}
                             />
                         )}
                     </>

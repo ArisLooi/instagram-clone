@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../features/posts/postsSlice";
+import { addComment, likePost } from "../features/posts/postsSlice";
 import { ProfileContext } from "../App";
 
 export default function CommentModal({ show, handleClose, postId }) {
@@ -19,14 +19,28 @@ export default function CommentModal({ show, handleClose, postId }) {
         }
     };
 
+    const handleLike = () => {
+        dispatch(likePost(postId));
+    };
+
     return (
         <Modal show={show} onHide={handleClose} size="lg">
-            <Modal.Header closeButton>
-                <Modal.Title>Add a comment</Modal.Title>
-            </Modal.Header>
+
             <Modal.Body>
                 <Row>
-                    <Col sm={12}>
+                    <Col sm={4}>
+                        <Image
+                            src={post?.image}
+                            alt="Commented Image"
+                            fluid />
+                    </Col>
+                    <Col sm={8}>
+                        <p>{post?.description}</p>
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                            <Button onClick={handleLike} variant="outline-success">
+                                <i className="bi bi-hand-thumbs-up"></i> {post?.likes}
+                            </Button>
+                        </div>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="comment">
                                 <Form.Control
