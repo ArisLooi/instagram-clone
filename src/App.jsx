@@ -6,7 +6,7 @@ import { PROFILE_DATA } from "./data";
 import ImageGrid from "./components/ImageGrid";
 import Bookmark from "./components/Bookmark";
 import AddPostModal from "./components/AddPostModal";
-import profileImageUrl from '/me.jpg';
+import profileImageUrl from '/vite.svg';
 
 export const ProfileContext = createContext(null);
 
