@@ -6,13 +6,12 @@ import { PROFILE_DATA } from "./data";
 import ImageGrid from "./components/ImageGrid";
 import Bookmark from "./components/Bookmark";
 import AddPostModal from "./components/AddPostModal";
-import profileImageUrl from '/vite.svg';
+import profileImageUrl from '/me.jpg';
 
 export const ProfileContext = createContext(null);
 
 export default function App() {
-  // const profileImageUrl = "/me.jpg";
-  // console.log(profileImageUrl)
+
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
